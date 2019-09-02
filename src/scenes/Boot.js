@@ -21,7 +21,6 @@ export default class extends Phaser.Scene {
     this.game.setScaleFactor = setScaleFactor.bind(this)
     this.game.setScaleFactor()
 
-    // this.gameScale.setMode('resize')
     const progress = this.add.graphics()
     this.load.on('progress', value => {
       progress.clear()
@@ -34,34 +33,59 @@ export default class extends Phaser.Scene {
       )
     })
 
+    this.load.spritesheet('tiles', 'assets/images/tiles.png', {
+      frameWidth: 75,
+      frameHeight: 75,
+    })
+    this.load.spritesheet('units', 'assets/images/units.png', {
+      frameWidth: 15,
+      frameHeight: 30,
+    })
+    this.load.spritesheet('soldier', 'assets/images/soldier.png', {
+      frameWidth: 8,
+      frameHeight: 15,
+    })
+    this.load.spritesheet('archer', 'assets/images/archer.png', {
+      frameWidth: 11,
+      frameHeight: 13,
+    })
+    this.load.spritesheet('explosion', 'assets/images/explosion.png', {
+      frameWidth: 128,
+      frameHeight: 128,
+    })
+    this.load.spritesheet('catapult', 'assets/images/catapult.png', {
+      frameWidth: 22,
+      frameHeight: 13,
+    })
+    this.load.spritesheet('highlight', 'assets/images/highlight.png', {
+      frameWidth: 495,
+      frameHeight: 175,
+    })
+
+    this.load.image('cursor', 'assets/images/cursor.png')
+    this.load.image('overlay', 'assets/images/overlay.png')
+    this.load.image('castle', 'assets/images/castle.png')
+    this.load.image('tilebg', 'assets/images/tilebg.png')
+    this.load.image('bullet', 'assets/images/bullet.png')
+    this.load.image('ground', 'assets/images/ground.png')
+    this.load.image('sky', 'assets/images/sky.jpg')
+    this.load.image('play', 'assets/images/play.png')
     this.load.image('p1-win', 'assets/images/p1-win.png')
     this.load.image('p2-win', 'assets/images/p2-win.png')
-    this.load.image('coin', 'assets/images/coin.png')
-    this.load.image('exit', 'assets/images/exit.png')
-    this.load.image('play', 'assets/images/play.png')
-    this.load.image('menu-bubble', 'assets/images/menu-bubble.png')
-    this.load.audio('moveToNodeSound', 'assets/audio/check.wav')
-    this.load.audio('clickSound', 'assets/audio/click.wav')
-    this.load.audio('recaptureNodeSound', 'assets/audio/recapture.mp3')
-    this.load.audio('captureNodeSound', 'assets/audio/coin.mp3')
-    this.load.audio('destroyNodeSound', 'assets/audio/error.mp3')
 
-    this.load.image('sound', 'assets/images/sound.png')
-    this.load.image('particle-green', 'assets/images/particle-green.png')
-    this.load.image('particle-pink', 'assets/images/particle-pink.png')
-    this.load.image('fullscreen', 'assets/images/fullscreen.png')
-    this.load.image('nodeGreen', 'assets/images/hexg.png')
-    this.load.image('nodePink', 'assets/images/hexp.png')
-    this.load.image('handle', 'assets/images/handle1.png')
-    this.load.image('handle2', 'assets/images/handle2.png')
-    this.load.spritesheet('tiles', 'assets/images/tiles.png', {
-      frameWidth: 400,
-      frameHeight: 400,
-    })
-    this.load.spritesheet('hexagon', 'assets/images/hex.png', {
-      frameWidth: 392,
-      frameHeight: 452,
-    })
+    this.load.audio('medium_crash_1', 'assets/audio/medium_crash_1.mp3')
+    this.load.audio('medium_crash_2', 'assets/audio/medium_crash_2.mp3')
+    this.load.audio('medium_crash_7', 'assets/audio/medium_crash_6.mp3')
+    this.load.audio('small_crash_1', 'assets/audio/small_crash_1.mp3')
+    this.load.audio('small_crash_2', 'assets/audio/small_crash_2.mp3')
+    this.load.audio('small_crash_3', 'assets/audio/small_crash_3.mp3')
+    this.load.audio('footstep', 'assets/audio/footstep.mp3')
+    this.load.audio('pick', 'assets/audio/pick.mp3')
+    this.load.audio('submit', 'assets/audio/submit.mp3')
+    this.load.audio('swap', 'assets/audio/swap.mp3')
+    this.load.audio('swap2', 'assets/audio/swap2.mp3')
+    this.load.audio('swipe', 'assets/audio/swipe.mp3')
+    this.load.audio('submit_failed', 'assets/audio/submit_failed.mp3')
 
     this.load.on('complete', () => {
       progress.destroy()

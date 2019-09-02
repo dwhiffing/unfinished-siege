@@ -6,8 +6,8 @@ import GameScene from './scenes/Game'
 import GameOverScene from './scenes/GameOver'
 import CreditsScene from './scenes/Credits'
 
-const width = document.documentElement.clientWidth
-const height = document.documentElement.clientHeight
+const width = 1334 || ocument.documentElement.clientWidth
+const height = 750 || document.documentElement.clientHeight
 
 const game = new Phaser.Game({
   transparent: true,
@@ -16,23 +16,17 @@ const game = new Phaser.Game({
   width,
   height,
   scene: [BootScene, MenuScene, GameScene, GameOverScene, CreditsScene],
+  physics: {
+    default: 'arcade',
+    arcade: {
+      debug: true,
+    },
+  },
   scale: {
     width,
     height,
     resolution: window.devicePixelRatio,
   },
-  // plugins: {
-  //   global: [
-  //     {
-  //       key: 'GameScalePlugin',
-  //       plugin: GameScalePlugin,
-  //       mapping: 'gameScale',
-  //       data: {
-  //         /* See 'Configuration' */
-  //       },
-  //     },
-  //   ],
-  // },
 })
 
 export default game
