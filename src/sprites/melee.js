@@ -112,7 +112,7 @@ export default class Melee extends Unit {
 
   attack(soldier) {
     this.play('attack')
-    this.attackSound.play()
+    // this.attackSound.play()
     this.isAttacking = true
     this.body.velocity.x = 0
     this.game.time.addEvent({

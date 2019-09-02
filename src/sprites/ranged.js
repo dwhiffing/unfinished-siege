@@ -24,7 +24,7 @@ export default class Ranged extends Unit {
     this.bullets.getChildren().forEach(bullet => {
       bullet.setGravity(0, 200)
       bullet.explode = () => {
-        this.boomSound.play()
+        // this.boomSound.play()
         this.game.blasts.get(
           bullet.x,
           bullet.y,
@@ -62,7 +62,7 @@ export default class Ranged extends Unit {
         this.play('shoot')
         for (let i = 0; i < numShots; i++) {
           let bullet = this.bullets.getFirstDead()
-          this.attackSound.play()
+          // this.attackSound.play()
           this.lifespan = new Phaser.Math.RandomDataGenerator().integerInRange(
             2500,
             3000

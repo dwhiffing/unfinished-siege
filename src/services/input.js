@@ -1,21 +1,8 @@
-const spawns = {
-  melee: {
-    one: 'soldiers',
-    two: 'knights',
-    three: 'elephants',
-  },
-  ranged: {
-    one: 'slings',
-    two: 'archers',
-    three: 'catapults',
-  },
-}
-
 export default class InputManager {
   constructor(game) {
     this.game = game
     this.keys = game.input.keyboard.addKeys(
-      'W,A,S,D,left,down,right,up,space,z,u,i,o,p,shift,1,2,3'
+      'W,A,S,D,left,down,right,up,space,z,u'
     )
 
     this.game.input.keyboard.on(
@@ -62,18 +49,8 @@ export default class InputManager {
       this
     )
 
-    const spawnThing = spawns => {
-      if (this.keys['2'].isDown) {
-        return spawns.two
-      } else if (this.keys['3'].isDown) {
-        return spawns.three
-      } else {
-        return spawns.one
-      }
-    }
-
     this.game.input.keyboard.on('keydown_U', () => {
-      this.game.spawner.spawn(spawnThing(spawns.melee))
+      this.game.spawner.spawn('soldiers')
     })
   }
 }

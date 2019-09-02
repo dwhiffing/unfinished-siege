@@ -53,7 +53,7 @@ export default class Board {
     if (x1 === x2 && y1 === y2) {
       return
     }
-    this.swapSound.play()
+    // this.swapSound.play()
     this._preventSwappingForDuration(this.checkForMatches.bind(this))
     const tile1 = this._getTile(x1, y1)
     const tile2 = this._getTile(x2, y2)
@@ -85,9 +85,9 @@ export default class Board {
   submitMatches() {
     let matches = this._getMatches()
     if (matches.length > 0) {
-      this.submitSound.play()
+      // this.submitSound.play()
     } else {
-      this.submitFailedSound.play()
+      // this.submitFailedSound.play()
     }
     matches.forEach(match => {
       if (match.spawn) {
