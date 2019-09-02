@@ -52,5 +52,9 @@ export default class InputManager {
     this.game.input.keyboard.on('keydown_U', () => {
       this.game.spawner.spawn('soldiers')
     })
+
+    this.game.input.keyboard.on('keydown_I', () => {
+      this.game.spawner.spawn('archers')
+    })
   }
 }

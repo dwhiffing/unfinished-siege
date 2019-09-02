@@ -1,16 +1,14 @@
 import Ranged from '../sprites/ranged'
 
 const SHOT_TIME = 800
-const MIN_SHOT_VELOCITY_X = 300
-const MAX_SHOT_VELOCITY_X = 400
-const MIN_SHOT_VELOCITY_Y = -200
-const MAX_SHOT_VELOCITY_Y = -280
+const MIN_SHOT_VELOCITY_X = 100
+const MAX_SHOT_VELOCITY_X = 200
+const MIN_SHOT_VELOCITY_Y = -100
+const MAX_SHOT_VELOCITY_Y = -180
 
 export default class Archer extends Ranged {
   constructor(game, x, y, key) {
-    const opts = {
-      boomSound: 'small_crash_3',
-    }
+    const opts = {}
     super(game, x, y, key, opts)
   }
 

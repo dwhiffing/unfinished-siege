@@ -14,18 +14,14 @@ const game = new Phaser.Game({
   type: Phaser.AUTO,
   parent: 'phaser-example',
   width,
+  pixelArt: true,
   height,
   scene: [BootScene, MenuScene, GameScene, GameOverScene, CreditsScene],
   physics: {
     default: 'arcade',
     arcade: {
-      // debug: true,
+      debug: true,
     },
-  },
-  scale: {
-    width,
-    height,
-    resolution: window.devicePixelRatio,
   },
 })
 

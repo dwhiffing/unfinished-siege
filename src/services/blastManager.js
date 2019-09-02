@@ -12,10 +12,9 @@ export default class BlastManager extends Phaser.GameObjects.Group {
     blast.setOrigin(0.5, 0.5)
     this.add(blast)
 
-    let animation = blast.anims.create({
+    let animation = this.game.anims.create({
       key: 'boom',
-      frames: [0, 1, 2, 3],
-      repeat: 25,
+      frames: [0, 1, 2, 3].map(n => ({ key: 'explosion', frame: n })),
     })
     animation.killOnComplete = true
 
@@ -24,7 +23,10 @@ export default class BlastManager extends Phaser.GameObjects.Group {
 
   get(x, y, scale = 0.3, direction) {
     let blast = this.getFirstDead() || this.create()
-    blast.reset(x, y)
+    blast.setActive(true)
+    blast.setVisible(true)
+    blast.x = x
+    blast.y = y
     blast.tint = 0xffffff
     blast.setScale(scale, scale)
 

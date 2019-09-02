@@ -1,51 +1,41 @@
 import Unit from './unit'
+import Bullet from './bullet'
 
 const ANIMATIONS = {
-  idle: [[0], 2],
-  shoot: [[1], 2],
+  idle: {
+    key: 'archer_idle',
+    frames: [0].map(n => ({ key: 'archer', frame: n })),
+    frameRate: 2,
+  },
+  shoot: {
+    key: 'archer_shoot',
+    frames: [1].map(n => ({ key: 'archer', frame: n })),
+    frameRate: 5,
+  },
 }
 
 export default class Ranged extends Unit {
-  constructor(
-    game,
-    x,
-    y,
-    key,
-    { boomSound = 'small_crash_1', boomVolume = 1 }
-  ) {
+  constructor(game, x, y, key) {
     super(game, x, y, key)
     this.addAnimations(ANIMATIONS)
-    this.bullets = game.physics.add.group()
-    this.bullets.createMultiple({ key: 'bullet', repeat: 15, active: false })
-    this.attackSound = game.sound.add('pick')
-    this.boomSound = game.sound.add(boomSound)
-    this.boomSound.volume = boomVolume
-    this.unitWidth = 30
-    this.bullets.getChildren().forEach(bullet => {
-      bullet.setGravity(0, 200)
-      bullet.explode = () => {
-        // this.boomSound.play()
-        this.game.blasts.get(
-          bullet.x,
-          bullet.y,
-          Math.pow(bullet.size, 3) / 7,
-          this.direction
-        )
-        bullet.setActive(false)
-      }
+    this.bullets = game.physics.add.group({
+      key: 'bullet',
+      classType: Bullet,
+      maxSize: 15,
+      runChildUpdate: true,
     })
+    this.attackSound = game.sound.add('pick')
   }
 
   reset(x, y, direction) {
     super.reset(x, y, direction)
-    this.x = x
     this.direction = direction
-    this.play('idle')
+    this.x = x + 300 * direction
+    this.play('archer_idle')
   }
 
   shoot(
     numShots = 1,
-    size = 1,
     minVelocityX,
     maxVelocityX,
     minVelocityY,
@@ -59,46 +49,18 @@ export default class Ranged extends Unit {
         maxShotTime
       ),
       callback: () => {
-        this.play('shoot')
+        this.play('archer_shoot')
         for (let i = 0; i < numShots; i++) {
-          let bullet = this.bullets.getFirstDead()
-          // this.attackSound.play()
-          this.lifespan = new Phaser.Math.RandomDataGenerator().integerInRange(
-            2500,
-            3000
-          )
-          bullet.x = this.x + 20 * this.direction
-          bullet.y = this.y - 50
-          bullet.setActive(true)
-          bullet.size = size
-          bullet.setScale(size)
-          bullet.body.velocity.x =
-            new Phaser.Math.RandomDataGenerator().integerInRange(
-              minVelocityX,
-              maxVelocityX
-            ) * this.direction
-          bullet.body.velocity.y = new Phaser.Math.RandomDataGenerator().integerInRange(
+          let bullet = this.bullets.get()
+          bullet.shoot(
+            this.direction,
+            minVelocityX,
+            maxVelocityX,
             minVelocityY,
             maxVelocityY
           )
         }
       },
     })
-  }
-
-  update() {
-    //   this.game.physics.arcade.overlap(
-    //     this.bullets,
-    //     this.game.ground,
-    //     (one, two) => {
-    //       if (one.explode) {
-    //         one.explode()
-    //       } else if (two.explode) {
-    //         two.explode()
-    //       }
-    //     },
-    //     null,
-    //     this
-    //   )
   }
 }
