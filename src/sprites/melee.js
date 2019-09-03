@@ -20,35 +20,31 @@ const ANIMATIONS = {
 }
 
 export default class Melee extends Unit {
-  constructor(
+  constructor({
     game,
     x,
     y,
     key,
-    {
-      baseDamage = 1,
-      baseHealth = 10,
-      baseSpeed = 100,
-      attackSound = 'swipe',
-      amount = 1,
-    }
-  ) {
-    super(game, x, y, key)
+    baseDamage = 1,
+    baseHealth = 10,
+    baseSpeed = 100,
+    attackSound = 'swipe',
+    amount = 1,
+  }) {
+    super({ game, x, y, key })
     this.baseDamage = baseDamage
     this.baseHealth = baseHealth
     this.baseSpeed = baseSpeed
     this.amount = amount
     this.attackSound = game.sound.add(attackSound)
-    // this.addAnimations(ANIMATIONS)
-    // this.setSize(this.width, this.height)
-    // this.setScale(2)
-
-    // this.setOrigin(0.5, 1)
+    this.addAnimations(ANIMATIONS)
   }
 
   reset(x, y, direction) {
     super.reset(x, y, direction)
-    // this.play('soldier_walk')
+    this.play('soldier_walk')
+    this.isAttacking = false
+    this.isStopped = false
     this.maxHealth = this.baseHealth
     this.health = this.maxHealth
     this.speed = this.baseSpeed * direction
@@ -60,8 +56,12 @@ export default class Melee extends Unit {
     if (!this.active) {
       return
     }
-
-    if (!this.isStopped && !this.isAttacking && this.body.velocity.x === 0) {
+    if (
+      this.isStopped === false &&
+      !this.isAttacking &&
+      this.body.velocity.x === 0
+    ) {
+      this.play('soldier_walk')
       this.body.velocity.x = this.speed
     }
 
@@ -78,26 +78,15 @@ export default class Melee extends Unit {
     if (this.isStopped) {
       return
     }
-    // this.play('soldier_idle')
-    this.isStopped = true
+    this.play('soldier_idle')
     this.body.velocity.x = 0
+    this.isStopped = true
     this.game.time.addEvent({
       delay: 500,
-      callback: this.check.bind(this),
+      callback: () => {
+        this.isStopped = false
+      },
     })
-  }
-
-  check() {
-    if (!this.isAttacking) {
-      this.isStopped = false
-      // this.play('soldier_walk')
-      this.body.velocity.x = this.speed
-    } else {
-      this.game.time.addEvent({
-        delay: 500,
-        callback: this.check.bind(this),
-      })
-    }
   }
 
   overlap(unit) {
@@ -119,6 +108,7 @@ export default class Melee extends Unit {
   }
 
   destroy() {
+    this.setPosition(this.x, -200)
     this.setActive(false)
     this.setVisible(false)
   }
@@ -131,7 +121,7 @@ export default class Melee extends Unit {
   }
 
   attack(soldier) {
-    // this.play('soldier_attack')
+    this.play('soldier_attack')
     // this.attackSound.play()
     this.isAttacking = true
     this.body.velocity.x = 0

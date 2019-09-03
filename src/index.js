@@ -10,17 +10,17 @@ const width = 1334 || ocument.documentElement.clientWidth
 const height = 750 || document.documentElement.clientHeight
 
 const game = new Phaser.Game({
+  width,
+  height,
   transparent: true,
+  pixelArt: true,
   type: Phaser.AUTO,
   parent: 'phaser-example',
-  width,
-  pixelArt: true,
-  height,
   scene: [BootScene, MenuScene, GameScene, GameOverScene, CreditsScene],
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true,
+      // debug: true,
     },
   },
 })

@@ -1,12 +1,12 @@
-const MIN_BUILD_TIME = 100
-const MAX_BUILD_TIME = 300
+const MIN_BUILD_TIME = 500
+const MAX_BUILD_TIME = 500
 const units = ['soldiers']
 
 export default class ArtificialIntelligence {
   constructor(game) {
     this.spawner = game.spawner
     this.game = game
-    this.setTimer()
+    this.spawnTimer = 0
   }
 
   setTimer() {

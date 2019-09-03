@@ -1,9 +1,9 @@
 import Phaser from 'phaser'
 
 export default class Unit extends Phaser.GameObjects.Sprite {
-  constructor(game, x, y, key, frame) {
-    super(game, x, y, key, frame)
-    this.setOrigin(0.5, 1)
+  constructor({ game, x, y, key }) {
+    super(game, x, y)
+    this.setTexture(key)
     this.game = game
   }
 
@@ -12,16 +12,15 @@ export default class Unit extends Phaser.GameObjects.Sprite {
   }
 
   reset(x, y, direction = 1) {
-    this.x = x
-    this.y = y
+    this.setPosition(x, y)
+    this.setActive(true)
+    this.setVisible(true)
     this.direction = direction
     this.flipX = direction === -1
     this.tint = direction === 1 ? 0xff9999 : 0x9999ff
+    this.setOrigin(0.5, 1)
     this.setScale(3)
-    this.setActive(true)
   }
-
-  update() {}
 
   render() {}
 }

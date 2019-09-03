@@ -9,11 +9,11 @@ export default class Spawner {
     this.soldiers = game.physics.add.group({
       classType: Soldier,
       key: 'soldier',
-      frame: 0,
+      enableBody: true,
+      physicsBodyType: Phaser.Physics.ARCADE,
       maxSize: 30,
-      active: true,
-      visible: true,
     })
+
     this.archers = game.physics.add.group({
       classType: Archer,
       key: 'archer',

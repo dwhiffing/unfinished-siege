@@ -33,7 +33,6 @@ export default class InputManager {
       'keydown_SPACE',
       () => {
         if (this.game.cursor.selected) {
-          console.log(this.game.cursor.selected, this.game.cursor)
           this.game.board.swap(this.game.cursor.selected, this.game.cursor)
           this.game.cursor.deselect()
         } else {

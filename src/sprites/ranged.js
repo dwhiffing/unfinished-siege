@@ -15,8 +15,8 @@ const ANIMATIONS = {
 }
 
 export default class Ranged extends Unit {
-  constructor(game, x, y, key) {
-    super(game, x, y, key)
+  constructor({ game, x, y, key }) {
+    super({ game, x, y, key })
     this.addAnimations(ANIMATIONS)
     this.bullets = game.physics.add.group({
       key: 'bullet',

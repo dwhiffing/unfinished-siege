@@ -8,8 +8,7 @@ const MAX_SHOT_VELOCITY_Y = -180
 
 export default class Archer extends Ranged {
   constructor(game, x, y, key) {
-    const opts = {}
-    super(game, x, y, key, opts)
+    super({ game, x, y, key })
   }
 
   reset(x, y, direction) {
