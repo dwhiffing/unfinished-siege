@@ -11,13 +11,12 @@ export default class Unit extends Phaser.GameObjects.Sprite {
     Object.values(animations).forEach(value => this.game.anims.create(value))
   }
 
-  reset(x, y, direction = 1) {
+  reset(x, y, flip) {
     this.setPosition(x, y)
     this.setActive(true)
     this.setVisible(true)
-    this.direction = direction
-    this.flipX = direction === -1
-    this.tint = direction === 1 ? 0xff9999 : 0x9999ff
+    this.flipX = flip
+    this.tint = flip ? 0x9999ff : 0xff9999
     this.setOrigin(0.5, 1)
     this.setScale(3)
   }

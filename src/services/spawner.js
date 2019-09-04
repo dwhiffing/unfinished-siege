@@ -37,13 +37,13 @@ export default class Spawner {
 
   render() {}
 
-  spawn(type, otherSide) {
+  spawn(type, flipped) {
     // this.submitSound.play()
     let group = this[type]
     if (group) {
       let thing = group.get()
       if (thing) {
-        thing.reset(otherSide ? 400 : 0, 225, otherSide ? -1 : 1)
+        thing.reset(flipped ? 400 : 0, 225, flipped)
       }
     } else {
       console.warn(`tried to spawn ${type}, which doesnt exist`)

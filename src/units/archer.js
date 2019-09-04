@@ -11,8 +11,8 @@ export default class Archer extends Ranged {
     super({ game, x, y, key })
   }
 
-  reset(x, y, direction) {
-    super.reset(x, y, direction)
+  reset(x, y, flipped) {
+    super.reset(x, y, flipped)
     this.shoot()
   }
 

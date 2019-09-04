@@ -21,7 +21,7 @@ export default class BlastManager extends Phaser.GameObjects.Group {
     return blast
   }
 
-  get(x, y, scale = 0.3, direction) {
+  get(x, y, scale = 0.3, flipX) {
     let blast = this.getFirstDead() || this.create()
     blast.setActive(true)
     blast.setVisible(true)
@@ -37,7 +37,7 @@ export default class BlastManager extends Phaser.GameObjects.Group {
       Math.floor(scale * 100),
       this.game.spawner.getTargets()
     ).forEach(r => {
-      if (r.direction !== direction) {
+      if (r.flipX !== flipX) {
         r.hit(scale * 50)
       }
     })

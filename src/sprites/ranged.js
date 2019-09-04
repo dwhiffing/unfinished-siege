@@ -27,10 +27,9 @@ export default class Ranged extends Unit {
     this.attackSound = game.sound.add('pick')
   }
 
-  reset(x, y, direction) {
-    super.reset(x, y, direction)
-    this.direction = direction
-    this.x = x + 300 * direction
+  reset(x, y, flipped) {
+    super.reset(x, y, flipped)
+    this.x = x + 300 * flipped ? -1 : 1
     this.play('archer_idle')
   }
 
@@ -53,7 +52,7 @@ export default class Ranged extends Unit {
         for (let i = 0; i < numShots; i++) {
           let bullet = this.bullets.get()
           bullet.shoot(
-            this.direction,
+            this.flipX,
             minVelocityX,
             maxVelocityX,
             minVelocityY,

@@ -40,14 +40,14 @@ export default class Melee extends Unit {
     this.addAnimations(ANIMATIONS)
   }
 
-  reset(x, y, direction) {
-    super.reset(x, y, direction)
+  reset(x, y, flipped) {
+    super.reset(x, y, flipped)
     this.play('soldier_walk')
     this.isAttacking = false
     this.isStopped = false
     this.maxHealth = this.baseHealth
     this.health = this.maxHealth
-    this.speed = this.baseSpeed * direction
+    this.speed = this.baseSpeed * (flipped ? -1 : 1)
     this.damageAmount = this.baseDamage
     this.body.velocity.x = this.speed
   }
@@ -93,15 +93,12 @@ export default class Melee extends Unit {
     if (!this.active) {
       return
     }
-    if (unit.direction !== this.direction) {
+    if (unit.flipX !== this.flipX) {
       if (!this.isAttacking) {
         this.attack(unit)
       }
     } else {
-      if (
-        (this.direction === 1 && this.x < unit.x) ||
-        (this.direction === -1 && this.x > unit.x)
-      ) {
+      if ((!this.flipX && this.x < unit.x) || (this.flipX && this.x > unit.x)) {
         this.stop()
       }
     }
@@ -122,15 +119,13 @@ export default class Melee extends Unit {
 
   attack(soldier) {
     this.play('soldier_attack')
-    // this.attackSound.play()
     this.isAttacking = true
     this.body.velocity.x = 0
+    soldier.hit(this.damageAmount)
+
     this.game.time.addEvent({
       delay: 500,
-      callback: () => {
-        soldier.hit(this.damageAmount)
-        this.isAttacking = false
-      },
+      callback: () => (this.isAttacking = false),
     })
   }
 }
