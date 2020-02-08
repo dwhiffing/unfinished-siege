@@ -5,35 +5,53 @@ export default class BlastManager extends Phaser.GameObjects.Group {
     super(game)
     this.game = game
     this.name = 'BlastGroup'
-  }
 
-  create() {
-    let blast = this.game.add.sprite(0, 0, 'explosion')
-    blast.setOrigin(0.5, 0.5)
-    this.add(blast)
-
-    let animation = this.game.anims.create({
-      key: 'boom',
-      frames: [0, 1, 2, 3].map(n => ({ key: 'explosion', frame: n })),
+    this.blasts = game.physics.add.group({
+      key: 'explosion',
+      classType: Blast,
+      maxSize: 15,
+      active: false,
+      visible: false,
+      runChildUpdate: true,
     })
-    animation.killOnComplete = true
-
-    return blast
   }
 
   get(x, y, scale = 0.3, flipX) {
-    let blast = this.getFirstDead() || this.create()
-    blast.setActive(true)
-    blast.setVisible(true)
-    blast.x = x
-    blast.y = y
-    blast.tint = 0xffffff
-    blast.setScale(scale, scale)
+    let blast = this.blasts.get()
+    blast.reset(x, y, scale, flipX)
+    return blast
+  }
+}
 
-    blast.angle = new Phaser.Math.RandomDataGenerator().integerInRange(0, 360)
-    blast.play('boom')
+class Blast extends Phaser.GameObjects.Sprite {
+  constructor(game, x, y, key) {
+    super(game, x, y, key)
+    this.game = game
+    this.setOrigin(0.5, 0.5)
+  }
+
+  reset(x, y, scale, flipX) {
+    this.setActive(true)
+    this.setVisible(true)
+    this.setPosition(x, y)
+    this.tint = 0xffffff
+    this.setScale(scale, scale)
+    this.angle = new Phaser.Math.RandomDataGenerator().integerInRange(0, 360)
+    this.game.anims.create({
+      key: 'boom',
+      frameRate: 20,
+      frames: [0, 1, 2, 3].map(n => ({ key: 'explosion', frame: n })),
+    })
+    this.play('boom')
+    this.game.time.addEvent({
+      delay: 200,
+      callback: () => {
+        this.setActive(false)
+        this.setVisible(false)
+      },
+    })
     this.getInRangeForDamage(
-      blast,
+      this,
       Math.floor(scale * 100),
       this.game.spawner.getTargets()
     ).forEach(r => {
@@ -41,8 +59,6 @@ export default class BlastManager extends Phaser.GameObjects.Group {
         r.hit(scale * 50)
       }
     })
-
-    return blast
   }
 
   getInRangeForDamage(source, range, array) {

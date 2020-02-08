@@ -4,28 +4,31 @@ export default class Bullet extends Phaser.GameObjects.Sprite {
     this.game = game
   }
 
-  shoot(flipX, minVelocityX, maxVelocityX, minVelocityY, maxVelocityY) {
-    this.x = this.x + 20 * direction
+  shoot(x, y, flipX, minVelocityX, maxVelocityX, minVelocityY, maxVelocityY) {
+    const direction = flipX ? -1 : 1
+    this.x = x + 20 * direction
     this.flipX = flipX
-    this.y = this.y - 50
+    this.y = y - 50
+    this.body.setGravity(0, 120)
     this.setActive(true)
     this.setVisible(true)
     this.body.velocity.x =
       new Phaser.Math.RandomDataGenerator().integerInRange(
         minVelocityX,
         maxVelocityX
-      ) * (flipX ? -1 : 1)
+      ) * direction
     this.body.velocity.y = new Phaser.Math.RandomDataGenerator().integerInRange(
       minVelocityY,
       maxVelocityY
     )
+    console.log(this.body.velocity.x)
   }
 
   update() {
-    if (this.active && this.y > 200) {
+    if (this.active && this.y > 220) {
       this.setActive(false)
       this.setVisible(false)
-      this.game.blasts.get(this.x, this.y, 2, this.flipX)
+      this.game.blasts.get(this.x, this.y, 0.5, this.flipX)
     }
   }
 }

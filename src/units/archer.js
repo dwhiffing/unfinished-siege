@@ -1,10 +1,10 @@
 import Ranged from '../sprites/ranged'
 
-const SHOT_TIME = 800
-const MIN_SHOT_VELOCITY_X = 100
-const MAX_SHOT_VELOCITY_X = 200
-const MIN_SHOT_VELOCITY_Y = -100
-const MAX_SHOT_VELOCITY_Y = -180
+const SHOT_TIME = 300
+const MIN_SHOT_VELOCITY_X = 80
+const MAX_SHOT_VELOCITY_X = 100
+const MIN_SHOT_VELOCITY_Y = -150
+const MAX_SHOT_VELOCITY_Y = -170
 
 export default class Archer extends Ranged {
   constructor(game, x, y, key) {

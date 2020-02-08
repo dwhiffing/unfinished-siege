@@ -35,6 +35,7 @@ export default class Ranged extends Unit {
 
   shoot(
     numShots = 1,
+    size,
     minVelocityX,
     maxVelocityX,
     minVelocityY,
@@ -52,6 +53,8 @@ export default class Ranged extends Unit {
         for (let i = 0; i < numShots; i++) {
           let bullet = this.bullets.get()
           bullet.shoot(
+            this.x,
+            this.y,
             this.flipX,
             minVelocityX,
             maxVelocityX,
